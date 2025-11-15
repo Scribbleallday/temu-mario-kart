@@ -380,7 +380,7 @@ input{
 	z-index: 100000;
 	display: table-cell;
 	vertical-align: middle;
-	text-align: center; 
+	text-align: center;
 	line-height: 23vmin;
 }
 #lap{
@@ -402,7 +402,7 @@ input{
 }
 #mywebsitelink{
 	display: none;
-	
+
 	position: absolute;
 	bottom: 0;
 	left: 0;
@@ -412,4 +412,20 @@ input{
 	transition: transform .5s ease-in-out;
 	transition: transform .5s ease-in-out, -webkit-transform .5s ease-in-out;
 	line-height: 0;
+}
+#warning {
+	position: absolute;
+	top: 5vmin;
+	right: 5vmin;
+	width: 40vmin;
+	padding: 2vmin;
+	background: rgba(0,0,0,0.75);
+	color: white;
+	text-align: left;
+	font-family: Arial;
+	font-size: 2vmin;
+	display: none;
+}
+#warning a {
+	color: white;
 }

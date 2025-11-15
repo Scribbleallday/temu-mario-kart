@@ -10,7 +10,7 @@ var MOUNTAIN_DIST = 250;
 var OOB_DIST = 200;
 var LAPS = 3;
 function MODS(){
-	
+
 }
 
 var serverList = [
@@ -243,6 +243,10 @@ database.ref("/testServer").once("value", function(e){
 	}
 }); */
 
+if(top != self) {
+	document.getElementById("warning").style.display = "block";
+}
+
 function forceScroll(){
 	requestAnimationFrame(forceScroll);
 	window.scrollTo(0, 0);
@@ -251,7 +255,7 @@ forceScroll();
 
 //var database = firebase.database();
 
-var camera, renderer, scene, renderer2, scene2, labels = []; 
+var camera, renderer, scene, renderer2, scene2, labels = [];
 scene = new THREE.Scene();
 renderer = new THREE.WebGLRenderer();
 renderer.setPixelRatio(window.devicePixelRatio);
@@ -320,7 +324,7 @@ menu2 = function(){
 			var angle = screen.orientation.type == "portrait-primary" ? e.gamma : screen.orientation.type == "portrait-secondary" ? -e.gamma : screen.orientation.type == "landscape-primary" ? e.beta : screen.orientation.type == "landscape-secondary" ? -e.beta : 0;
 			me.data.steer = Math.max(Math.min((-angle) / 180 * Math.PI, Math.PI / 6), -Math.PI / 6);
 		}
-		
+
 		if(DeviceOrientationEvent.requestPermission){
 			DeviceOrientationEvent.requestPermission("The game needs to access phone tilt so you can steer your car.").then(permissionState => {
 				if (permissionState === 'granted')
@@ -367,7 +371,7 @@ host = function(){
 		f.style.transform = "none";
 		getCode();
 	}, 1000);
-	
+
 	function getCode(){
 		code = "";
 		var letters = "ABCDEFGHIJKLMMNOPQRSTUVWXYZ";
@@ -378,14 +382,14 @@ host = function(){
 			if(codeCheck.val() == null || codeCheck.val().status == -1 || !codeCheck.val().timestamp || Date.now() - codeCheck.val().timestamp > 1000 * 60 * 60 * 24){ // Allow overwriting a game if it was created more than 24 hours ago - seems safe.
 				console.log(code);
 				document.getElementById("code").innerHTML = code;
-				
+
 				database.ref(code).set({
 					status: 0,
 					players: {},
 					map: document.getElementById("trackcode").innerHTML,
 					timestamp: Date.now()
 				});
-				
+
 				database.ref(code + "/players").on("child_added", function(p){
 					console.log(p);
 					players[p.ref_.path.pieces_[2]] = {
@@ -425,19 +429,19 @@ host = function(){
 					labels.push(label);
 					pl.model.receiveShadow = true;
 					scene.add(pl.model);
-					
+
 					if(p.ref_.path.pieces_[2] == me.ref.path.pieces_[2]){
 						me.label = pl.label;
 						me.model = pl.model;
 						me.label.innerHTML = "";
 					}
 				});
-				
+
 				database.ref(code + "/players").on("child_changed", function(p){
 					// console.log(p);
 					players[p.ref_.path.pieces_[2]].data = p.val();
 				});
-				
+
 				me.ref = database.ref(code + "/players").push();
 				me.data = {
 					x: 0,
@@ -453,41 +457,41 @@ host = function(){
 					collision: {}
 				}
 				me.ref.set(me.data);
-				
+
 				database.ref(code + "/status").on("value", function(v){
 					v = v.val();
 					if(v == 1){
 						document.getElementsByClassName("info")[0].outerHTML = "";
 						document.getElementById("startgame").outerHTML = "";
-						
+
 						gameStarted = true;
 						gameSortaStarted = true;
-						
+
 						var countDown = document.createElement("DIV");
 						countDown.innerHTML = "3";
 						countDown.className = "title";
 						countDown.id = "countdown";
 						f.appendChild(countDown);
-						
+
 						lap = document.createElement("DIV");
 						lap.innerHTML = "1/" + LAPS;
 						lap.className = "title";
 						lap.id = "lap";
 						f.appendChild(lap);
-						
+
 						setTimeout(function(){
 							countDown.innerHTML = "2";
 						}, 1000);
-						
+
 						setTimeout(function(){
 							countDown.innerHTML = "1";
 						}, 2000);
-						
+
 						setTimeout(function(){
 							countDown.innerHTML = "GO!";
 							gameSortaStarted = false;
 						}, 3000);
-						
+
 						setTimeout(function(){
 							countDown.innerHTML = "";
 						}, 4000);
@@ -497,7 +501,7 @@ host = function(){
 				getCode();
 		});
 	}
-	
+
 	join();
 }
 
@@ -561,7 +565,7 @@ function loadMap(){
 		map.add(wall);
 	}
 	scene.add(map);
-	
+
 	trees = new THREE.Object3D();
 	var tree = new THREE.Mesh(
 		new THREE.CylinderBufferGeometry(0, 4, 15),
@@ -580,7 +584,7 @@ function loadMap(){
 		trees.add(t);
 	}
 	scene.add(trees);
-	
+
 	signs = new THREE.Object3D();
 	var sign = new THREE.Mesh(
 		new THREE.ConeBufferGeometry(0.7, 2, 5),
@@ -599,7 +603,7 @@ function loadMap(){
 		signs.add(s);
 	}
 	scene.add(signs);
-	
+
 	var startdata = document.getElementById("trackcode").innerHTML.trim().split("|")[1].trim().split(" ");
 	startc = new THREE.Object3D();
 	for(var i = 0; i < startdata.length; i++){
@@ -637,7 +641,7 @@ function loadMap(){
 	ground.rotation.set(-Math.PI / 2, 0, 0);
 	ground.receiveShadow = true;
 	main.add(ground);
-	
+
 	for(var i = 0; i < 100; i++){
 		var cube = new THREE.Mesh(
 			new THREE.BoxBufferGeometry(100, 100, 100),
@@ -656,26 +660,26 @@ function loadMap(){
 
 function join(){
 	eval(loadMap());
-	
+
 	scene.background = new THREE.Color(0x7fb0ff);
-	
+
 	camera = new THREE.PerspectiveCamera(
 		90,
 		window.innerWidth / window.innerHeight,
 		1,
 		1000
 	);
-	
+
 	camera.position.set(0, 3, 10);
 	scene.add(camera);
-	
+
 	var player = new THREE.Object3D();
 	player.position.set(0, 0, 0);
-	
+
 	camera.lookAt(player.position);
-	
+
 	scene.add(player);
-	
+
 	var light = new THREE.DirectionalLight(0xffffff, 0.7);
 	light.position.set(3000, 2000, -2000);
 	light.castShadow = true;
@@ -690,9 +694,9 @@ function join(){
 	light.shadow.bias = 0.00002;
 	scene.add(light);
 	scene.add(new THREE.AmbientLight(0xffffff, 0.5));
-	
+
 	//scene.add(new THREE.AmbientLight(0x404040));
-	
+
 	var x = 0;
 	var ray = new THREE.Raycaster();
 	function toXYCoords(pos){
@@ -704,11 +708,11 @@ function join(){
 		return vector;
 	}
 	var windowsize = {x: window.innerWidth, y: window.innerHeight};
-	
+
 	var ray = new THREE.Raycaster();
 	ray.near = 0;
 	ray.far = 1;
-	
+
 	var ren = renderer;
 	var controls;
 	if(VR){
@@ -718,14 +722,14 @@ function join(){
 		ren = effect;
 		controls = new THREE.DeviceOrientationControls(camera);
 	}
-	
+
 	var lastTime = performance.now();
 	function render(timestamp) {
 		requestAnimationFrame(render);
 		var timepassed = timestamp - lastTime;
 		lastTime = timestamp;
 		var warp = timepassed / 16;
-		
+
 		if(gameStarted){
 			if(!mobile){
 				if(left)
@@ -738,31 +742,31 @@ function join(){
 			if(VR)
 				me.data.steer = camera.rotation.z;
 			me.data.steer = Math.max(-Math.PI / 6, Math.min(Math.PI / 6, me.data.steer));
-			
+
 			players[me.ref.path.pieces_[2]].data = me.data;
-			
+
 			if(!gameSortaStarted){
 				for(var p in players){
 					var play = players[p];
-					
+
 					play.data.dir += play.data.steer / 10 * warp;
-					
+
 					play.data.xv += Math.sin(play.data.dir) * SPEED * warp;
 					play.data.yv += Math.cos(play.data.dir) * SPEED * warp;
-					
+
 					play.data.xv *= Math.pow(0.99, warp);
 					play.data.yv *= Math.pow(0.99, warp);
-					
+
 					play.data.x += play.data.xv * warp;
 					play.data.y += play.data.yv * warp;
-					
+
 					play.model.position.x = play.data.x + play.data.xv;
 					play.model.position.z = play.data.y + play.data.yv;
 					play.model.rotation.y = play.data.dir;
-					
+
 					play.model.children[0].rotation.z = Math.PI / 2 - play.data.steer;
 					play.model.children[1].rotation.z = Math.PI / 2 - play.data.steer;
-					
+
 					// function checkCubes(angle){
 					// 	ray.set(play.model.position, angle);
 					// 	var inter = ray.intersectObjects(blocks);
@@ -780,7 +784,7 @@ function join(){
 					// checkCubes(new THREE.Vector3(0, 0, -1));
 					// checkCubes(new THREE.Vector3(1, 0, 0));
 					// checkCubes(new THREE.Vector3(-1, 0, 0));
-					
+
 					for(var w in map.children){
 						var wall = map.children[w];
 						var posi = new THREE.Vector2(play.data.x, play.data.y);
@@ -832,7 +836,7 @@ function join(){
 							play.data.yv *= BOUNCE;
 						}
 					}
-					
+
 					for(var i in startc.children){
 						var cp = startc.children[i];
 						if(Math.abs(cp.plane.distanceToPoint(play.model.position.clone().sub(cp.position))) < 1){
@@ -848,12 +852,12 @@ function join(){
 							}
 						}
 					}
-					
+
 					if(play.data.lap > LAPS && document.getElementById("countdown").innerHTML == ""){
 						document.getElementById("countdown").style.fontSize = "25vmin";
 						document.getElementById("countdown").innerHTML = play.data.name.replaceAll("<", "&lt;") + " Won!";
 					}
-					
+
 					for(var pl in players){
 						if(play != players[pl] && play.model.position.distanceTo(players[pl].model.position) < 2){
 							var ply = players[pl];
@@ -884,14 +888,14 @@ function join(){
 							}
 						}
 					}
-					
+
 					if(play.model.position.distanceTo(new THREE.Vector3()) > OOB_DIST){
 						play.data.x = 0;
 						play.data.y = 0;
 					}
 				}
 			}
-			
+
 			var target = new THREE.Vector3(
 				me.model.position.x + Math.sin(-me.model.rotation.y) * 5,
 				3,
@@ -903,17 +907,17 @@ function join(){
 				camera.position.z * Math.pow(CAMERA_LAG, warp) + target.z * (1 - Math.pow(CAMERA_LAG, warp))
 			);
 			camera.lookAt(me.model.position);
-			
+
 			me.ref.set(me.data);
-			
+
 			lap.innerHTML = me.data.lap <= LAPS ? me.data.lap + "/" + LAPS : "";
 		}else{
 			camera.position.set(50 * Math.sin(x), 20, 50 * Math.cos(x));
 			camera.lookAt(player.position);
 		}
-		
+
 		x += 0.01;
-		
+
 		camera.updateMatrix();
 		camera.updateMatrixWorld();
 		camera.updateProjectionMatrix();
@@ -930,12 +934,12 @@ function join(){
 			}else
 				label.style.display = "none";
 		}
-		
+
 		if(windowsize.x != window.innerWidth || windowsize.x != window.innerHeight){
 			windowsize = {x: window.innerWidth, y: window.innerHeight};
 			onWindowResize();
 		}
-		
+
 		if(VR){
 			var a = camera.rotation.y;
 			controls.update();
@@ -944,9 +948,9 @@ function join(){
 		ren.render(scene, camera);
 		MODS();
 	}
-	
+
 	render(performance.now());
-	
+
 	window.addEventListener("resize", onWindowResize, false);
 	window.addEventListener("orientationchange", onWindowResize, false);
 
@@ -1049,7 +1053,7 @@ codeCheck = function(){
 						labels.push(label);
 						pl.model.receiveShadow = true;
 						scene.add(pl.model);
-						
+
 						if(p.ref_.path.pieces_[2] == me.ref.path.pieces_[2]){
 							me.label = pl.label;
 							me.model = pl.model;
@@ -1057,7 +1061,7 @@ codeCheck = function(){
 						}
 					}
 				});
-				
+
 				database.ref(code + "/players").on("child_changed", function(p){
 					// console.log(p);
 					players[p.ref_.path.pieces_[2]].data = p.val();
@@ -1078,40 +1082,40 @@ codeCheck = function(){
 					collision: {}
 				}
 				me.ref.set(me.data);
-				
+
 				database.ref(code + "/status").on("value", function(v){
 					v = v.val();
 					if(v == 1){
 						document.getElementsByClassName("info")[0].outerHTML = "";
-						
+
 						gameStarted = true;
 						gameSortaStarted = true;
-						
+
 						var countDown = document.createElement("DIV");
 						countDown.innerHTML = "3";
 						countDown.className = "title";
 						countDown.id = "countdown";
 						f.appendChild(countDown);
-						
+
 						lap = document.createElement("DIV");
 						lap.innerHTML = "1/3";
 						lap.className = "title";
 						lap.id = "lap";
 						f.appendChild(lap);
-						
+
 						setTimeout(function(){
 							countDown.innerHTML = "2";
 						}, 1000);
-						
+
 						setTimeout(function(){
 							countDown.innerHTML = "1";
 						}, 2000);
-						
+
 						setTimeout(function(){
 							countDown.innerHTML = "GO!";
 							gameSortaStarted = false;
 						}, 3000);
-						
+
 						setTimeout(function(){
 							countDown.innerHTML = "";
 						}, 4000);
@@ -1151,7 +1155,7 @@ window.onkeyup = function(e){
 }
 
 if(mobile){
-	
+
 }
 
 document.body.onkeydown = function(e){
