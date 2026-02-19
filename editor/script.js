@@ -106,6 +106,7 @@ function select(n){
 	sel = n;
 	for(var i = 0; i < s.children.length - 1; i++)
 		s.children[i].className = "button" + (i == n ? " selected" : "");
+		console.log(s.children[i].className)
 }
 
 function gridX(x){
@@ -379,4 +380,7 @@ function dedupTrees(){
 		
 		poss.push(trees[i]);
 	}
+}
+function boxSelect(x,y){
+
 }
