@@ -159,10 +159,10 @@ ca.onmousedown = function(e){
 		});
 	if(sel == 4)
 		eraseL(gridX(mouse.cur.x), gridY(mouse.cur.y));
-	if(sel == 5)
+	/*if(sel == 5)
 		c.beginPath();
 		c.rect(mouse.start.x, mouse.start.y, mouse.cur.x, mouse.cur.y);
-		c.stroke();
+		c.stroke();*/
 }
 
 ca.onmousemove = function(e){
