@@ -4,7 +4,6 @@ var trees = [];
 var arrows = [];
 var erase = [];
 var hist = [];
-const ctx = canvas.getContext("2d");
 
 var mouse = {
 	down: false,
@@ -107,7 +106,6 @@ function select(n){
 	sel = n;
 	for(var i = 0; i < s.children.length - 1; i++)
 		s.children[i].className = "button" + (i == n ? " selected" : "");
-		console.log(s.children[i].className)
 }
 
 function gridX(x){
@@ -159,10 +157,6 @@ ca.onmousedown = function(e){
 		});
 	if(sel == 4)
 		eraseL(gridX(mouse.cur.x), gridY(mouse.cur.y));
-	/*if(sel == 5)
-		c.beginPath();
-		c.rect(mouse.start.x, mouse.start.y, mouse.cur.x, mouse.cur.y);
-		c.stroke();*/
 }
 
 ca.onmousemove = function(e){
