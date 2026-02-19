@@ -21,9 +21,9 @@
 			<div id="help" onclick="this.parentElement.style.transform='translateY(-200vh)'">
 				<h1>Track-Making Guide</h1>
 				<br/>
-				This is a track editor for my <a href="https://jchabin.github.io/cars/">Online Racing Game.</a> There are 4 different things you can place:
+				<b style="color: pink">This is the editor for my redux of <a href="https://jchabin.github.io/cars/">Jchabin's Online Racing Game.</a> There are 4 different things you can place:</b>
 				<p><b>Walls</b>- Just click and drag to make a wall.</p>
-				<p><b>Starting Lines/Checkpoints</b>- Make them the same way as you make walls. When the game uses these, it will make the first one you drew into the starting line, and the second one into the checkpoint. You can only draw one of each. (I mean, you <em>can</em> draw more, but the game won't handle it very well...)</p>
+				<p><b>Starting Lines/Checkpoints</b>- Make them the same way as you make walls. When the game uses these, it will make the first one you drew into the starting line, and the second one into the checkpoint. You can only draw one of each. (I mean, you <em>can</em> draw more, but the game won't handle it very well... <b style="color: pink">better ones coming soon! :3 </b>)</p>
 				<p><b>Trees</b>- Trees are very simple. You just click to place one, or drag to make a whole forest!</p>
 				<p><b>Arrows</b>- Click and drag to make an arrow. You'll notice it's like a wall, but with a fixed length. Whichever way it is "pointing" will be the direction the arrow is facing.</p>
 				The three other buttons aren't objects that can be placed.
@@ -44,6 +44,7 @@
 			<div class="button" onclick="exp()">Export</div>
 			<div class="button" onclick="dedupTrees()">T-Dedup</div>
 			<div class="button big" onclick="help()">?</div>
+			<div class="button" onclick="settings()">Settings</div>
 		</div>
 		<canvas id="c"></canvas>
 		<script src="script.js"></script>
