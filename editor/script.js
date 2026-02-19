@@ -365,6 +365,10 @@ function help(){
 	document.getElementById("help").parentElement.style.transform = "none";
 }
 
+function settings(){
+	document.getElementById("settings").parentElement.style.transform = "none";
+}
+
 function dedupTrees(){
 	var poss = [];
 
