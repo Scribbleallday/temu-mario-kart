@@ -4,6 +4,8 @@ var trees = [];
 var arrows = [];
 var erase = [];
 var hist = [];
+var setmenu = document.getElementById("settings");
+var options = [];
 
 var mouse = {
 	down: false,
@@ -366,7 +368,10 @@ function help(){
 }
 
 function settings(){
-	document.getElementById("settings").parentElement.style.transform = "none";
+	setmenu.style.display = "inline-block"
+}
+function closeset() {
+	setmenu.style.display = 'none'
 }
 
 function dedupTrees(){
