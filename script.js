@@ -13,7 +13,18 @@ function MODS(){
 
 }
 
+
 var serverList = [
+	{
+		apiKey: "AIzaSyB2bFk5lLaHFQEidb-WfwpTnQ4cGDgARA0",
+		authDomain: "temu-mario-kart.firebaseapp.com",
+		projectId: "temu-mario-kart",
+		storageBucket: "temu-mario-kart.firebasestorage.app",
+		projectId: "https://temu-mario-kart-default-rtdb.firebaseio.com",
+		messagingSenderId: "29535469705",
+		appId: "1:29535469705:web:54da95a5182ed0cfe74658",
+		measurementId: "G-0TWPBRDP5J"
+	},
 	{
 		apiKey: "AIzaSyDiJsMLlix5o9XqPW1EpeBvuA15XNjlR8M",
 		authDomain: "car-game-a86b9.firebaseapp.com",
@@ -150,98 +161,6 @@ setTimeout(function(){
 setTimeout(function(){
 	document.getElementById("settings").style.transform = "none";
 }, 1800);
-/*var connected = -1;
-/*var config = {
-	apiKey: "AIzaSyDiJsMLlix5o9XqPW1EpeBvuA15XNjlR8M",
-	authDomain: "car-game-a86b9.firebaseapp.com",
-	databaseURL: "https://car-game-a86b9.firebaseio.com",
-	projectId: "car-game-a86b9",
-	storageBucket: "car-game-a86b9.appspot.com",
-	messagingSenderId: "722396856191"
-};
-firebase.initializeApp(config);
-var database = firebase.database();
-try{
-	firebase.analytics();
-}catch(e){ console.log("Analytics were blocked :("); }
-
-
-database.ref("/testServer").once("value", function(e){
-	if(connected < 0 || connected > 0){
-		database = firebase.apps[0].database();
-		connected = 0;
-	}
-});
-
-config = {
-	apiKey: "AIzaSyCsqpn0aTDqU8ffGVE284fmSEOTK2tOgq8",
-	authDomain: "car-game-backup.firebaseapp.com",
-	databaseURL: "https://car-game-backup.firebaseio.com",
-	projectId: "car-game-backup",
-	storageBucket: "car-game-backup.appspot.com",
-	messagingSenderId: "1015722732476"
-};
-firebase.initializeApp(config, "backup");
-database = firebase.apps[1].database();
-database.ref("/testServer").once("value", function(e){
-	if(connected < 0 || connected > 1){
-		database = firebase.apps[1].database();
-		connected = 1;
-	}
-});
-
-config = {
-	apiKey: "AIzaSyDNuMPH_bg8Orkndl8Md6lUh_EOS3pitGs",
-	authDomain: "car-game-backup-2.firebaseapp.com",
-	databaseURL: "https://car-game-backup-2-default-rtdb.firebaseio.com",
-	projectId: "car-game-backup-2",
-	storageBucket: "car-game-backup-2.appspot.com",
-	messagingSenderId: "250860288006",
-	appId: "1:250860288006:web:9df8ed3929e7fceb2d2b87"
-};
-firebase.initializeApp(config, "backup2");
-database = firebase.apps[2].database();
-database.ref("/testServer").once("value", function(e){
-	if(connected < 0 || connected > 2){
-		database = firebase.apps[2].database();
-		connected = 2;
-	}
-});
-
-config = {
-	apiKey: "AIzaSyCmfz7RvzLaAo4xIxA-sH3qhXuGQZYMuvE",
-	authDomain: "car-game-backup-3.firebaseapp.com",
-	databaseURL: "https://car-game-backup-3-default-rtdb.firebaseio.com",
-	projectId: "car-game-backup-3",
-	storageBucket: "car-game-backup-3.appspot.com",
-	messagingSenderId: "477326457153",
-	appId: "1:477326457153:web:421821136bcc6a67f149c0"
-};
-firebase.initializeApp(config, "backup3");
-database = firebase.apps[3].database();
-database.ref("/testServer").once("value", function(e){
-	if(connected < 0 || connected > 3){
-		database = firebase.apps[3].database();
-		connected = 3;
-	}
-});
-
-config = {
-	apiKey: "AIzaSyAerrEq1YUJNZnvQhZvyRa6LOS9VyhEYvs",
-	authDomain: "car-game-backup-4.firebaseapp.com",
-	projectId: "car-game-backup-4",
-	storageBucket: "car-game-backup-4.appspot.com",
-	messagingSenderId: "802151922986",
-	appId: "1:802151922986:web:69b9ff0ad8778d51da7253"
-};
-firebase.initializeApp(config, "backup4");
-database = firebase.apps[4].database();
-database.ref("/testServer").once("value", function(e){
-	if(connected < 0 || connected > 4){
-		database = firebase.apps[4].database();
-		connected = 4;
-	}
-}); */
 
 if(top != self) {
 	document.getElementById("warning").style.display = "block";
